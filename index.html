@@ -1,230 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>York Oracle Games</title>
-    <style>/* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>York Oracle Games</title>
+  <style>
+    /* --- Google Fonts --- */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap');
 
-/* --- Dark Theme Variables --- */
-:root {
-    --bg-gradient: linear-gradient(135deg, #0f0f0f, #1a1a1a, #121212);
-    --card-bg: rgba(30, 30, 30, 0.6);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --text-color: #f2f2f2;
-    --accent: #E24A4A; /* Changed accent color to red */
-    --accent-glow: rgba(226, 74, 74, 0.6); /* Changed accent glow to red */
-    --shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-}
+    /* --- Dark Theme Variables --- */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f0f0f, #1a1a1a, #121212);
+      --card-bg: rgba(30, 30, 30, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-color: #f2f2f2;
+      --accent: #E24A4A;
+      --accent-glow: rgba(226, 74, 74, 0.6);
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
 
-/* --- Reset --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    /* --- Reset --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* --- Body Layout --- */
-body {
-    font-family: 'Roboto', sans-serif;
-    background: var(--bg-gradient);
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem;
-    min-height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scroll on some animations */
-}
+    /* --- Body Layout --- */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-/* --- Dashboard --- */
-.dashboard-container {
-    width: 100%;
-    max-width: 700px;
-}
-
-/* --- Header --- */
-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-}
-
-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    letter-spacing: 2px;
-    color: var(--accent);
-    text-shadow: 0 0 12px var(--accent-glow);
-    animation: fadeInDownScale 1.2s ease-out forwards; /* Cooler animation */
-}
-
-/* --- Games Grid --- */
-.games-grid {
-    display: grid;
-    gap: 2rem;
-}
-
-/* --- Game Card --- */
-.game-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    backdrop-filter: blur(12px);
-    box-shadow: var(--shadow);
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
-    animation: slideInFromLeft 1s ease-out forwards; /* Cooler animation */
-}
-
-.game-card:nth-child(even) {
-    animation: slideInFromRight 1s ease-out forwards; /* Alternate animation for even cards */
-}
-
-.game-card:hover {
-    transform: translateY(-12px) scale(1.03) rotateZ(1deg); /* More dynamic hover */
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8),
-                0 0 25px var(--accent-glow);
-}
-
-.game-card h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    margin-bottom: 0.6rem;
-    color: var(--text-color); /* Ensure title color */
-}
-
-.game-card p {
-    font-size: 1rem;
-    color: #bbb;
-    margin-bottom: 1.8rem;
-    line-height: 1.5;
-}
-
-/* --- Buttons --- */
-.play-button {
-    display: inline-block;
-    background: var(--accent);
-    color: #fff;
-    text-decoration: none;
-    padding: 14px 28px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
-    box-shadow: 0 0 10px var(--accent-glow);
-    position: relative;
-    overflow: hidden;
-}
-
-.play-button:before { /* Glowing border effect */
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(transparent, rgba(255, 255, 255, 0.2), transparent 30%, transparent);
-    transform: rotate(45deg);
-    animation: rotateGlow 3s linear infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.play-button:hover:before {
-    opacity: 1;
-}
-
-.play-button:hover {
-    background: #c83a3a; /* Darker red on hover */
-    box-shadow: 0 0 25px var(--accent-glow), 0 0 50px var(--accent-glow);
-    transform: scale(1.08); /* Slightly larger scale */
-}
-
-/* --- Animations --- */
-@keyframes fadeInDownScale {
-    from { opacity: 0; transform: translateY(-50px) scale(0.8); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes slideInFromLeft {
-    from { opacity: 0; transform: translateX(-100px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideInFromRight {
-    from { opacity: 0; transform: translateX(100px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes rotateGlow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* --- Responsive --- */
-@media (max-width: 600px) {
+    /* --- Dashboard --- */
     .dashboard-container {
-        padding: 0 1rem;
+      width: 100%;
+      max-width: 700px;
     }
+
+    /* --- Header --- */
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
     header h1 {
-        font-size: 2.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-shadow: 0 0 12px var(--accent-glow);
+      animation: fadeInDownScale 1.2s ease-out forwards;
     }
+
+    /* --- Games Grid --- */
+    .games-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    /* --- Game Card --- */
     .game-card {
-        padding: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      animation: slideInFromLeft 1s ease-out forwards;
     }
-    .game-card h2 {
-        font-size: 1.7rem;
+
+    .game-card:nth-child(even) {
+      animation: slideInFromRight 1s ease-out forwards;
     }
+
+    .game-card:hover {
+      transform: translateY(-12px) scale(1.03) rotateZ(1deg);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--accent-glow);
+    }
+
+    .game-card h2, .game-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+      color: var(--text-color);
+    }
+
+    .game-card p {
+      font-size: 1rem;
+      color: #bbb;
+      margin-bottom: 1.8rem;
+      line-height: 1.5;
+    }
+
+    /* --- Buttons --- */
     .play-button {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 0 10px var(--accent-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .play-button:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(transparent, rgba(255, 255, 255, 0.2), transparent 30%, transparent);
+      transform: rotate(45deg);
+      animation: rotateGlow 3s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .play-button:hover:before {
+      opacity: 1;
+    }
+
+    .play-button:hover {
+      background: #c83a3a;
+      box-shadow: 0 0 25px var(--accent-glow), 0 0 50px var(--accent-glow);
+      transform: scale(1.08);
+    }
+
+    /* --- Fullscreen Iframe Overlay --- */
+    #answersOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #answersOverlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    #answersFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #closeOverlay {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      font-size: 2rem;
+      color: var(--accent);
+      cursor: pointer;
+      z-index: 10000;
+      transition: transform 0.2s ease, color 0.3s ease;
+    }
+
+    #closeOverlay:hover {
+      transform: scale(1.2);
+      color: #ff6666;
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeInDownScale {
+      from { opacity: 0; transform: translateY(-50px) scale(0.8); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes slideInFromLeft {
+      from { opacity: 0; transform: translateX(-100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInFromRight {
+      from { opacity: 0; transform: translateX(100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      .game-card {
+        padding: 1.5rem;
+      }
+      .play-button {
         padding: 12px 20px;
         font-size: 0.9rem;
+      }
     }
-}</style>
+  </style>
 </head>
-    <!-- Google tag (gtag.js) -->
+
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GHG1KB2WBM"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-GHG1KB2WBM');
 </script>
-<body>
 
-    <div class="dashboard-container">
-        <header>
-            <h1>York Games!</h1>
-        </header>
-        <main class="games-grid">
-            <div class="game-card">
-                <h2>Wordle</h2>
-                <p>Guess the hidden word in 6 tries. The daily puzzle that took the world by storm.</p>
-                <a href="https://oracle.yrk.link/wordle" class="play-button" target="_blank" rel="noopener noreferrer">
-                    Play
-                </a>
-                
-            </div>
-            <div class="game-card">
-                <h2>Spelling Bee</h2>
-                <p>Create words using letters from the hive and try to get the maximum score.</p>
-                <a href="https://oracle.yrk.link/spellingbee" class="play-button" target="_blank" rel="noopener noreferrer">
-                    Play
-                </a>
-        
-    </div>
-    <div class="game-card">
-                <h3>More Games soon!</h3>
-                <p>See the current York News!</p>
-                <a href="https://oracle.yrk.link/" class="play-button" target="_blank" rel="noopener noreferrer">
-                    Go
-                </a>
-        
-    </div>
+<body>
+  <div class="dashboard-container">
+    <header>
+      <h1>York Games!</h1>
+    </header>
+    <main class="games-grid">
+      <div class="game-card">
+        <h2>Wordle</h2>
+        <p>Guess the hidden word in 6 tries. The daily puzzle that took the world by storm.</p>
+        <a href="https://oracle.yrk.link/wordle" class="play-button" target="_blank">Play</a>
+      </div>
+
+      <div class="game-card">
+        <h2>Spelling Bee</h2>
+        <p>Create words using letters from the hive and try to get the maximum score.</p>
+        <a href="https://oracle.yrk.link/spellingbee" class="play-button" target="_blank">Play</a>
+      </div>
+
+      <div class="game-card">
+        <h2>Answers</h2>
+        <p>Check answers to the newspaper games!</p>
+        <button class="play-button" id="openAnswers">Check</button>
+      </div>
+
+      <div class="game-card">
+        <h3>More Games soon!</h3>
+        <p>See the current York News!</p>
+        <a href="https://oracle.yrk.link/" class="play-button" target="_blank">Go</a>
+      </div>
     </main>
-</div>
+  </div>
+
+  <!-- Fullscreen Iframe Overlay -->
+  <div id="answersOverlay">
+    <div id="closeOverlay">&times;</div>
+    <iframe id="answersFrame" src=""></iframe>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('answersOverlay');
+    const frame = document.getElementById('answersFrame');
+    const closeBtn = document.getElementById('closeOverlay');
+    const openBtn = document.getElementById('openAnswers');
+
+    openBtn.addEventListener('click', () => {
+      frame.src = 'https://oracle.yrk.link/games/answers';
+      overlay.classList.add('active');
+    });
+
+    function closeOverlay() {
+      overlay.classList.remove('active');
+      setTimeout(() => frame.src = '', 400); // allow fade-out before unload
+    }
+
+    closeBtn.addEventListener('click', closeOverlay);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeOverlay();
+    });
+  </script>
 </body>
 </html>

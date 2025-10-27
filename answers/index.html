@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>York Oracle – Game Answers</title>
+  <style>
+    /* --- Google Fonts --- */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+    /* --- Dark Theme Variables --- */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f0f0f, #1a1a1a, #121212);
+      --card-bg: rgba(30, 30, 30, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-color: #f2f2f2;
+      --accent: #E24A4A;
+      --accent-glow: rgba(226, 74, 74, 0.6);
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-shadow: 0 0 12px var(--accent-glow);
+      animation: fadeInDownScale 1.2s ease-out forwards;
+    }
+
+    main {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .answer-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .answer-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
+      color: var(--text-color);
+    }
+
+    .answer-card p {
+      color: #bbb;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pdf-viewer {
+      width: 100%;
+      height: 75vh;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.5);
+      background: #101010;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 10px var(--accent-glow);
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-btn:hover {
+      background: #c83a3a;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes fadeInDownScale {
+      from { opacity: 0; transform: translateY(-50px) scale(0.8); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      header h1 { font-size: 2.2rem; }
+      .pdf-viewer { height: 60vh; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>York Oracle Answers</h1>
+  </header>
+
+  <main>
+    <a href="../" class="back-btn">← Back to Games</a>
+
+    <div class="answer-card">
+      <h2>Vol. 3 — Issue 1</h2>
+      <p><strong>Answer Key</strong></p>
+
+      <!-- PDF Embed -->
+      <iframe src="1.pdf" class="pdf-viewer"></iframe>
+    </div>
+  </main>
+
+  <script>
+    // ESC key returns to parent site (handy when loaded in overlay)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.top.postMessage('closeAnswers', '*');
+      }
+    });
+  </script>
+</body>
+</html>
