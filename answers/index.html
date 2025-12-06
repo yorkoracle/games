@@ -134,6 +134,21 @@
 
   <main>
     <a href="../" class="back-btn">← Back to Games</a>
+    <div class="answer-card">
+  <h2>Vol. 3 — Issue 2</h2>
+  <p><strong>Scoreboard & Rank</strong></p>
+
+  <!-- Submit score -->
+  <div style="margin-bottom: 1.2rem;">
+    <input id="nameInput" placeholder="Your Name" style="padding:8px;border-radius:6px;width:45%;margin-right:6px;">
+    <input id="scoreInput" type="number" min="0" max="23" placeholder="Score (0–23)" style="padding:8px;border-radius:6px;width:30%;margin-right:6px;">
+    <button id="submitScoreBtn" class="back-btn" style="padding:8px 18px;">Submit</button>
+  </div>
+
+  <!-- Live leaderboard -->
+  <h3 style="margin-bottom:0.4rem;">Leaderboard</h3>
+  <div id="leaderboard" style="font-size:1rem;color:#ddd;"></div>
+</div>
 
     <div class="answer-card">
       <h2>Vol. 3 — Issue 1</h2>
@@ -151,6 +166,70 @@
         window.top.postMessage('closeAnswers', '*');
       }
     });
-  </script>
+    
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyClgN4OnN3tr2Dogn58s7eI008LEAo2_S4",
+    authDomain: "yorkoraclegames1.firebaseapp.com",
+    projectId: "yorkoraclegames1",
+    storageBucket: "yorkoraclegames1.firebasestorage.app",
+    messagingSenderId: "397427297646",
+    appId: "1:397427297646:web:22758b171b71ff4707457f"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Falcon status function
+  function falconRank(score) {
+    if (score >= 20) return "Falcon Flight Leader";
+    if (score >= 17) return "Soaring Falcon";
+    if (score >= 13) return "Falcon in Formation";
+    if (score >= 9) return "Gliding Falcon";
+    if (score >= 5) return "Falcon in Training";
+    if (score >= 1) return "Fledgling Falcon";
+    return "Grounded Falcon";
+  }
+
+  // Submit score
+  document.getElementById("submitScoreBtn").onclick = async () => {
+    const name = document.getElementById("nameInput").value.trim();
+    const score = parseInt(document.getElementById("scoreInput").value);
+
+    if (!name || isNaN(score) || score < 0 || score > 23) {
+      alert("Enter a valid name & score 0–23.");
+      return;
+    }
+
+    await addDoc(collection(db, "issue2_scores"), {
+      name,
+      score,
+      rank: falconRank(score),
+      timestamp: Date.now()
+    });
+  };
+
+  // Live leaderboard
+  const leaderboardDiv = document.getElementById("leaderboard");
+  const q = query(collection(db, "issue2_scores"), orderBy("score", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    let html = "";
+    snapshot.forEach((doc) => {
+      const d = doc.data();
+      html += `
+        <div style="margin:6px 0; padding:8px; background:rgba(255,255,255,0.05); border-radius:8px;">
+          <strong>${d.name}</strong> — ${d.score}/23  
+          <span style="color:var(--accent);">(${d.rank})</span>
+        </div>
+      `;
+    });
+    leaderboardDiv.innerHTML = html || "<em>No scores yet.</em>";
+  });
+</script>
+
 </body>
 </html>
