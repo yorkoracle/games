@@ -159,77 +159,76 @@
     </div>
   </main>
 
-  <script>
+  <script type="module">
     // ESC key returns to parent site (handy when loaded in overlay)
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         window.top.postMessage('closeAnswers', '*');
       }
     });
-    
-    <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyClgN4OnN3tr2Dogn58s7eI008LEAo2_S4",
-    authDomain: "yorkoraclegames1.firebaseapp.com",
-    projectId: "yorkoraclegames1",
-    storageBucket: "yorkoraclegames1.firebasestorage.app",
-    messagingSenderId: "397427297646",
-    appId: "1:397427297646:web:22758b171b71ff4707457f"
-  };
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyClgN4OnN3tr2Dogn58s7eI008LEAo2_S4",
+      authDomain: "yorkoraclegames1.firebaseapp.com",
+      projectId: "yorkoraclegames1",
+      storageBucket: "yorkoraclegames1.firebasestorage.app",
+      messagingSenderId: "397427297646",
+      appId: "1:397427297646:web:22758b171b71ff4707457f"
+    };
 
-  // Falcon status function
-  function falconRank(score) {
-    if (score >= 20) return "Falcon Flight Leader";
-    if (score >= 17) return "Soaring Falcon";
-    if (score >= 13) return "Falcon in Formation";
-    if (score >= 9) return "Gliding Falcon";
-    if (score >= 5) return "Falcon in Training";
-    if (score >= 1) return "Fledgling Falcon";
-    return "Grounded Falcon";
-  }
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // Submit score
-  document.getElementById("submitScoreBtn").onclick = async () => {
-    const name = document.getElementById("nameInput").value.trim();
-    const score = parseInt(document.getElementById("scoreInput").value);
-
-    if (!name || isNaN(score) || score < 0 || score > 23) {
-      alert("Enter a valid name & score 0–23.");
-      return;
+    // Falcon status function
+    function falconRank(score) {
+      if (score >= 20) return "Falcon Flight Leader";
+      if (score >= 17) return "Soaring Falcon";
+      if (score >= 13) return "Falcon in Formation";
+      if (score >= 9) return "Gliding Falcon";
+      if (score >= 5) return "Falcon in Training";
+      if (score >= 1) return "Fledgling Falcon";
+      return "Grounded Falcon";
     }
 
-    await addDoc(collection(db, "issue2_scores"), {
-      name,
-      score,
-      rank: falconRank(score),
-      timestamp: Date.now()
-    });
-  };
+    // Submit score
+    document.getElementById("submitScoreBtn").onclick = async () => {
+      const name = document.getElementById("nameInput").value.trim();
+      const score = parseInt(document.getElementById("scoreInput").value);
 
-  // Live leaderboard
-  const leaderboardDiv = document.getElementById("leaderboard");
-  const q = query(collection(db, "issue2_scores"), orderBy("score", "desc"));
+      if (!name || isNaN(score) || score < 0 || score > 23) {
+        alert("Enter a valid name & score 0–23.");
+        return;
+      }
 
-  onSnapshot(q, (snapshot) => {
-    let html = "";
-    snapshot.forEach((doc) => {
-      const d = doc.data();
-      html += `
-        <div style="margin:6px 0; padding:8px; background:rgba(255,255,255,0.05); border-radius:8px;">
-          <strong>${d.name}</strong> — ${d.score}/23  
-          <span style="color:var(--accent);">(${d.rank})</span>
-        </div>
-      `;
+      await addDoc(collection(db, "issue2_scores"), {
+        name,
+        score,
+        rank: falconRank(score),
+        timestamp: Date.now()
+      });
+    };
+
+    // Live leaderboard
+    const leaderboardDiv = document.getElementById("leaderboard");
+    const q = query(collection(db, "issue2_scores"), orderBy("score", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+      let html = "";
+      snapshot.forEach((doc) => {
+        const d = doc.data();
+        html += `
+          <div style="margin:6px 0; padding:8px; background:rgba(255,255,255,0.05); border-radius:8px;">
+            <strong>${d.name}</strong> — ${d.score}/23  
+            <span style="color:var(--accent);">(${d.rank})</span>
+          </div>
+        `;
+      });
+      leaderboardDiv.innerHTML = html || "<em>No scores yet.</em>";
     });
-    leaderboardDiv.innerHTML = html || "<em>No scores yet.</em>";
-  });
-</script>
+  </script>
 
 </body>
 </html>
